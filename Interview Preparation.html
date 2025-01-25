@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redesigned Luein Analytics Candidate Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+        /* Basic Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #3f51b5;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .interview-section, .feedback-section {
+      width: 45%;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-container {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .input-container {
+      margin-top: 15px;
+    }
+
+    .answer-input {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      resize: none;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      margin-top: 15px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+
+    .feedback-section {
+      display: none;
+    }
+
+    .feedback-message {
+      font-size: 18px;
+      color: #333;
+    }
+
+    /* Progress Tracker */
+    .progress {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #ddd;
+      height: 10px;
+      border-radius: 5px;
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background-color: #4CAF50;
+      width: 0%;
+      border-radius: 5px;
+    }
+</style>
+</head>
+
+<body>
+
+  <!-- Header with Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="leftnav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Blogs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+      </ul>
+      <ul class="rightnav">
+        <li data-tooltip="Calendar"><i class="fa-solid fa-calendar"></i></li>
+        <li data-tooltip="Profile"><i class="fa-solid fa-user"></i></li>
+        <li data-tooltip="Notifications"><i class="fa-regular fa-bell"></i></li>
+      </ul>
+      <i class="menu-toggle fa fa-bars"></i>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="main-container">
+    <aside class="sidebar">
+      <ul>
+        <li data-tooltip="Profile"><i class="fa-regular fa-user"></i></li>
+        <li data-tooltip="Interview"><i class="fa-solid fa-clipboard-question"><li><a href="codingchallenge.html">coding Challenge</a></li></i></li>
+        <li data-tooltip="All Jobs"><i class="fa-regular fa-file-lines"></i></li>
+        <li data-tooltip="Settings"><i class="fa-solid fa-gears"></i></li>
+      </ul>
+    </aside>
+
+  <header>
+    <h1>Interactive Interview Preparation</h1>
+  </header>
+
+  <div class="main-container">
+    <!-- Interview Section -->
+    <div class="interview-section">
+      <h2>Interview Question</h2>
+      <div class="question-container" id="question-container">
+        <!-- Dynamically inserted question -->
+      </div>
+
+      <div class="input-container">
+        <textarea class="answer-input" id="answer-input" placeholder="Type your answer here..."></textarea>
+      </div>
+
+      <button class="submit-btn" id="submit-btn">Submit Answer</button>
+
+      <div class="progress">
+        <p id="progress-message">Progress: 0/3</p>
+        <div class="progress-bar">
+          <span id="progress-bar"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Section -->
+    <div class="feedback-section" id="feedback-section">
+      <h3>Feedback</h3>
+      <p class="feedback-message" id="feedback-message">You did a great job!</p>
+      <button class="submit-btn" id="next-question-btn">Next Question</button>
+    </div>
+  </div>
+
+  <script>
+    // List of Interview Questions
+    const questions = [
+      {
+        question: "What is a closure in JavaScript?",
+        answer: "A closure is a function that retains access to variables from its lexical scope, even after the outer function has finished executing."
+      },
+      {
+        question: "Explain the difference between 'let' and 'var' in JavaScript.",
+        answer: "'let' is block-scoped, while 'var' is function-scoped. 'let' cannot be redeclared within the same scope, whereas 'var' can."
+      },
+      {
+        question: "What are Promises in JavaScript?",
+        answer: "A Promise is an object representing the eventual completion (or failure) of an asynchronous operation, and its resulting value."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+
+    const questionContainer = document.getElementById('question-container');
+    const answerInput = document.getElementById('answer-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const progressMessage = document.getElementById('progress-message');
+    const progressBar = document.getElementById('progress-bar');
+    const feedbackSection = document.getElementById('feedback-section');
+    const feedbackMessage = document.getElementById('feedback-message');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
+
+    // Function to load a question
+    function loadQuestion() {
+      if (currentQuestionIndex < questions.length) {
+        questionContainer.textContent = questions[currentQuestionIndex].question;
+      } else {
+        feedbackMessage.textContent = "You've completed the interview preparation!";
+        submitBtn.style.display = "none";
+      }
+      answerInput.value = "";
+    }
+
+    // Check the user's answer
+    function checkAnswer() {
+      const userAnswer = answerInput.value.trim();
+      const correctAnswer = questions[currentQuestionIndex].answer;
+
+      if (userAnswer === "") {
+        feedbackMessage.textContent = "Please provide an answer!";
+        feedbackSection.style.display = "block";
+        return;
+      }
+
+      const sanitizedAnswer = userAnswer.replace(/<script.*?>.*?<\/script>/g, ''); // Basic XSS protection
+
+      if (sanitizedAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        correctAnswers++;
+        feedbackMessage.textContent = "Correct! Well done!";
+      } else {
+        feedbackMessage.textContent = "Oops! Try again. The correct answer is: " + correctAnswer;
+      }
+
+      feedbackSection.style.display = "block";
+      updateProgress();
+    }
+
+    // Update progress
+    function updateProgress() {
+      const progressPercentage = ((correctAnswers / questions.length) * 100).toFixed(0);
+      progressBar.style.width = progressPercentage + "%";
+      progressMessage.textContent = `Progress: ${correctAnswers}/${questions.length}`;
+    }
+
+    // Event listener for submitting the answer
+    submitBtn.addEventListener('click', () => {
+      checkAnswer();
+    });
+
+    // Event listener for moving to the next question
+    nextQuestionBtn.addEventListener('click', () => {
+      currentQuestionIndex++;
+      loadQuestion();
+      feedbackSection.style.display = "none";
+      submitBtn.style.display = "block";
+    });
+
+    // Load the first question on page load
+    window.onload = loadQuestion;
+
+  </script>
+
+</body>
+</html>

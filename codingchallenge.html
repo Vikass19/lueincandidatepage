@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redesigned Luein Analytics Candidate Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Custom Styles for the Coding Challenges Section */
+    .coding-challenges-section {
+      margin-top: 50px;
+      background-color: #f4f4f4;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .coding-challenges-section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .problem-container {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 20px;
+    }
+
+    .problem-container h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .problem-container p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .code-area {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .code-input {
+      height: 150px;
+      width: 100%;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      resize: none;
+      margin-bottom: 15px;
+      background-color: #f9f9f9;
+      font-family: Consolas, 'Courier New', monospace;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+
+    .response-section {
+      margin-top: 15px;
+    }
+
+    .response {
+      font-size: 16px;
+      color: #4CAF50;
+    }
+
+    .error {
+      font-size: 16px;
+      color: #ff4d4d;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      .coding-challenges-section {
+        padding: 15px;
+      }
+
+      .coding-challenges-section h2 {
+        font-size: 20px;
+      }
+
+      .problem-container {
+        padding: 12px;
+      }
+
+      .problem-container h3 {
+        font-size: 16px;
+      }
+
+      .code-input {
+        height: 120px;
+        font-size: 14px;
+      }
+
+      .submit-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .coding-challenges-section {
+        margin-top: 20px;
+      }
+
+      .coding-challenges-section h2 {
+        font-size: 18px;
+      }
+
+      .problem-container {
+        padding: 10px;
+      }
+
+      .problem-container h3 {
+        font-size: 14px;
+      }
+
+      .code-input {
+        height: 100px;
+        font-size: 12px;
+      }
+
+      .submit-btn {
+        padding: 6px 14px;
+        font-size: 12px;
+      }
+
+      .response {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="leftnav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Blogs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+      </ul>
+      <ul class="rightnav">
+        <li data-tooltip="Calendar"><i class="fa-solid fa-calendar"></i></li>
+        <li data-tooltip="Profile"><i class="fa-solid fa-user"></i></li>
+        <li data-tooltip="Notifications"><i class="fa-regular fa-bell"></i></li>
+      </ul>
+      <i class="menu-toggle fa fa-bars"></i>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="main-container">
+    <!-- Coding Challenges Section -->
+    <section class="coding-challenges-section">
+      <h2>Tech Coding Challenges</h2>
+
+      <!-- Coding Problem -->
+      <div class="problem-container">
+        <h3>Problem: Reverse an Array</h3>
+        <p>Given an array of integers, reverse the array without using any additional data structures. You may modify the array in-place.</p>
+      </div>
+
+      <!-- Code Submission Area -->
+      <div class="code-area">
+        <textarea class="code-input" id="coding-input" placeholder="Write your code here..."></textarea>
+        <button class="submit-btn" id="submit-code">Submit Code</button>
+      </div>
+
+      <!-- Response Section -->
+      <div class="response-section" id="response-section" style="display: none;">
+        <p id="response-message" class="response"></p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Handle code submission
+    document.getElementById('submit-code').addEventListener('click', function() {
+      const codeInput = document.getElementById('coding-input').value;
+      const responseSection = document.getElementById('response-section');
+      const responseMessage = document.getElementById('response-message');
+
+      if (codeInput.trim() === '') {
+        responseMessage.textContent = "Please enter some code before submitting!";
+        responseMessage.classList.add('error');
+        responseMessage.classList.remove('response');
+        responseSection.style.display = 'block';
+      } else {
+        // Simulate code evaluation (you can later replace this with actual code execution logic)
+        responseMessage.textContent = "Code submitted successfully!";
+        responseMessage.classList.add('response');
+        responseMessage.classList.remove('error');
+        responseSection.style.display = 'block';
+
+        // Clear the input after submission
+        document.getElementById('coding-input').value = '';
+      }
+    });
+  </script>
+</body>
+</html>

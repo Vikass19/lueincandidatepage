@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redesigned Luein Analytics Candidate Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Header with Navigation */
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .navbar ul li {
+      margin: 0 15px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .rightnav {
+      display: flex;
+    }
+
+    .rightnav li {
+      margin: 0 10px;
+    }
+
+    .menu-toggle {
+      display: none;
+      color: white;
+      font-size: 30px;
+    }
+
+    /* Main Content Area */
+    .main-container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .profile-details {
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+    }
+
+    .grid-item {
+      background-color: #f4f4f4;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .grid-item img {
+      width: 100%;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .upload-btn, .choose-btn, .logout-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .upload-btn:hover, .choose-btn:hover, .logout-btn:hover {
+      background-color: #45a049;
+    }
+
+    .video-container {
+      text-align: center;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .navbar ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-details {
+        padding: 0 10px;
+      }
+
+      .navbar ul li {
+        margin: 10px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar ul li a {
+        font-size: 14px;
+      }
+
+      .grid-item {
+        padding: 15px;
+      }
+
+      .upload-btn, .choose-btn, .logout-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      .grid-item h3, .grid-item h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with Navigation -->
+  <header>
+    <nav class="navbar">
+      <ul class="leftnav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Blogs</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="codingchallenge.html">Code Challenge</a></li>
+      </ul>
+      <ul class="rightnav">
+        <li data-tooltip="Calendar"><i class="fa-solid fa-calendar"></i></li>
+        <li data-tooltip="Profile"><i class="fa-solid fa-user"></i></li>
+        <li data-tooltip="Notifications"><i class="fa-regular fa-bell"></i></li>
+      </ul>
+      <i class="menu-toggle fa fa-bars"></i>
+    </nav>
+  </header>
+
+  <!-- Profile and Details Section -->
+  <section class="profile-details">
+    <div class="grid-container">
+      <!-- Demo User Info -->
+      <div class="grid-item user-info">
+        <h3>Welcome, <span id="user-name">Vikas Bansode</span></h3>
+        <p>Frontend Developer</p>
+        <img src="img1.jpg" alt="User Profile Picture" id="user-profile-pic" />
+      </div>
+
+      <div class="grid-item profile-info">
+        <h3>Candidate Profile Information</h3>
+      </div>
+
+      <div class="grid-item resume-summary">
+        <button class="upload-btn">Upload Resume</button>
+        <button class="upload-btn">View Summary</button>
+      </div>
+
+      <div class="grid-item summary">
+        <h2>Summary <i class="fa-solid fa-pencil edit-icon" id="edit-summary"></i></h2>
+        <div class="info-container">
+          <p>Frontend Developer skilled in HTML, CSS, JavaScript, and responsive web design.</p>
+        </div>
+      </div>
+
+      <div class="grid-item work-history">
+        <h3>Work History</h3>
+        <hr>
+      </div>
+
+      <div class="grid-item education">
+        <h3>Education</h3>
+      </div>
+
+      <!-- Video Resume Section -->
+      <div class="grid-item video-resume">
+        <h3>Upload Video Resume</h3>
+        <!-- Choose Video Button -->
+        <button class="choose-btn" onclick="document.getElementById('resume-upload').click()">Choose Video</button>
+        <input type="file" id="resume-upload" accept="video/*" style="display: none;" />
+
+        <!-- Video Preview Section -->
+        <div class="video-container" id="video-container">
+          <video id="video-player" controls>
+            <source id="video-source" src="" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p id="upload-status"></p>
+        </div>
+      </div>
+
+      <div class="grid-item skills">
+        <h4>Skills</h4>
+      </div>
+
+      <!-- Logout Button -->
+      <div class="grid-item logout">
+        <button id="logout-btn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+
+  </script>
+</body>
+</html>

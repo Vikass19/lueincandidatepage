@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Opportunities</title>
+  
+  <style>
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  margin: 0;
+}
+
+/* Header Styling */
+header {
+  background-color: #282c34;
+  padding: 15px 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav .leftnav {
+  display: flex;
+  gap: 20px;
+}
+
+nav .leftnav li {
+  list-style: none;
+}
+
+nav .leftnav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+nav .leftnav a:hover,
+nav .leftnav a.active {
+  color: #1d72b8;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+/* Main Container */
+.main-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #282c34;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+#searchJob {
+  padding: 10px;
+  width: 70%;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+#searchBtn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #1d72b8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#searchBtn:hover {
+  background-color: #155d8e;
+}
+
+/* Job Listings Styling */
+.job-listings {
+  margin-top: 40px;
+}
+
+.job-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.job-item {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.job-item:hover {
+  transform: translateY(-5px);
+}
+
+.job-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.job-company,
+.job-location {
+  font-size: 1rem;
+  color: #666;
+}
+
+.job-description {
+  font-size: 0.9rem;
+  color: #444;
+  margin-top: 10px;
+}
+
+/* Pagination Styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.pagination-btn {
+  padding: 10px 20px;
+  background-color: #1d72b8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination-btn:hover {
+  background-color: #155d8e;
+}
+
+  </style>
+ 
+</head>
+<body>
+
+ <!-- Header with Navigation -->
+ <header>
+    <nav class="navbar">
+      <ul class="leftnav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Blogs</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="codingchallenge.html">code Challenge</a></li>
+      </ul>
+      <ul class="rightnav">
+        <li data-tooltip="Calendar"><i class="fa-solid fa-calendar"></i></li>
+        <li data-tooltip="Profile"><i class="fa-solid fa-user"></i></li>
+        <li data-tooltip="Notifications"><i class="fa-regular fa-bell"></i></li>
+      </ul>
+      <i class="menu-toggle fa fa-bars"></i>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="main-container">
+    <!-- <aside class="sidebar">
+      <ul>
+        <li data-tooltip="Profile"><i class="fa-regular fa-user"></i></li>
+        <li data-tooltip="Interview"><i class="fa-solid fa-clipboard-question"></i></li>
+        <li data-tooltip="All Jobs"><i class="fa-regular fa-file-lines"></i></li>
+        <li data-tooltip="Settings"><i class="fa-solid fa-gears"></i></li>
+      </ul>
+    </aside> -->
+
+  <!-- Main Content Area -->
+  <div class="main-container">
+    <h1>Fresh Job Opportunities</h1>
+    <p>Access to over 1M+ jobs for candidates</p>
+    
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="searchJob" placeholder="Search for jobs...">
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <!-- Job Listings -->
+    <section class="job-listings">
+      <h2>Popular Jobs</h2>
+      <div id="jobResults" class="job-results">
+        <!-- Job results will be displayed here by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button id="prevPage" class="pagination-btn">Prev</button>
+      <button id="nextPage" class="pagination-btn">Next</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const searchButton = document.getElementById("searchBtn");
+  const searchInput = document.getElementById("searchJob");
+  const jobResultsContainer = document.getElementById("jobResults");
+  let currentPage = 1;
+  const jobsPerPage = 6;
+  const totalJobs = 100; // Simulate a total of 100 jobs for demo
+
+  // Simulate fetching job data (for demo purposes)
+  function fetchJobs(query, page) {
+    const jobs = Array.from({ length: totalJobs }, (_, index) => ({
+      title: `Job Title ${index + 1}`,
+      company: `Company ${index + 1}`,
+      location: `Location ${index + 1}`,
+      description: `This is a job description for Job Title ${index + 1}.`,
+    }));
+
+    const filteredJobs = query
+      ? jobs.filter((job) =>
+          job.title.toLowerCase().includes(query.toLowerCase())
+        )
+      : jobs;
+
+    const start = (page - 1) * jobsPerPage;
+    const end = start + jobsPerPage;
+    return filteredJobs.slice(start, end);
+  }
+
+  // Render the job results
+  function renderJobs(jobs) {
+    jobResultsContainer.innerHTML = jobs
+      .map(
+        (job) => `
+      <div class="job-item">
+        <h3 class="job-title">${job.title}</h3>
+        <p class="job-company">${job.company}</p>
+        <p class="job-location">${job.location}</p>
+        <p class="job-description">${job.description}</p>
+      </div>`
+      )
+      .join("");
+  }
+
+  // Handle Search
+  searchButton.addEventListener("click", () => {
+    const query = searchInput.value;
+    currentPage = 1;
+    const jobs = fetchJobs(query, currentPage);
+    renderJobs(jobs);
+  });
+
+  // Handle Pagination
+  document.getElementById("nextPage").addEventListener("click", () => {
+    currentPage++;
+    const query = searchInput.value;
+    const jobs = fetchJobs(query, currentPage);
+    renderJobs(jobs);
+  });
+
+  document.getElementById("prevPage").addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      const query = searchInput.value;
+      const jobs = fetchJobs(query, currentPage);
+      renderJobs(jobs);
+    }
+  });
+
+  // Initial Job Rendering
+  const initialJobs = fetchJobs("", currentPage);
+  renderJobs(initialJobs);
+});
+
+  </script>
+
+</body>
+</html>
